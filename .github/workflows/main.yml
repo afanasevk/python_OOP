@@ -1,0 +1,12 @@
+on:
+  - pull_request
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    name: Проверка форматирования на соответствие PEP8
+    steps:
+    - uses: actions/checkout@v4
+    - run: pip install black
+    - name: PEP8 Check
+      run:  IFS=$'\n'; for x in `find . -regextype posix-egrep -iregex "\./*.*(((лаб|lab)[^0-9]*[1-4])|([1-4][^0-9]*(лаб|lab))).*/.*\.py"` ; do IFS=$'\n' black --check -l120 --skip-string-normalization $x; done
+        
